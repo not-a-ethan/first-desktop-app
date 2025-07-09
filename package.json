@@ -1,4 +1,8 @@
 {
+  "main": "index.js",
+  "name": "api-tester",
+  "author": "not-a-ethan",
+  "version": "1.0.0",
   "devDependencies": {
     "electron": "^37.2.0",
     "electron-builder": "^26.0.12"

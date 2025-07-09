@@ -29,16 +29,13 @@
       "package.json"
     ],
     "win": {
-      "target": "nsis",
-      "icon": "icon.ico"
+      "target": "nsis"
     },
     "mac": {
-      "target": "dmg",
-      "icon": "icon.icns"
+      "target": "dmg"
     },
     "linux": {
-      "target": "AppImage",
-      "icon": "icon.png"
+      "target": "AppImage"
     }
   }
 }

@@ -1,36 +1,42 @@
-const sillyQuotes = ["gurt: yo", "six seven", "empl*yment"];
-
-async function saveEntry() {
-  const entry = document.getElementById("entry").value;
-  if (!entry.trim()) {
-    alert("Cannot save an empty entry!");
-    return;
-  }
-  const result = await window.journalAPI.save(entry);
-
-  const randomQuote = sillyQuotes[Math.floor(Math.random() * sillyQuotes.length)];
-  new Notification("Entry Saved!", { body: randomQuote });
-
-  document.getElementById("entry").value = "";
-  loadEntries();
-}
-
-async function loadEntries() {
-  const entries = await window.journalAPI.load();
-  const list = document.getElementById("entriesList");
-  list.innerHTML = "";
-  entries.reverse().forEach((content) => {
-    const li = document.createElement("li");
-    li.textContent = content.slice(0, 50) + (content.length > 50 ? "..." : "");
-    li.dataset.fullEntry = content;
-    li.addEventListener("click", () => {
-      window.journalAPI.openEntry(li.dataset.fullEntry);
-    });
-    list.appendChild(li);
-  });
-}
-
 window.onload = () => {
   Notification.requestPermission();
-  loadEntries();
 };
+
+async function request() {
+  //new Notification("test", {body: "body"})
+
+  const method = document.getElementById("method").value;
+  const url = document.getElementById("url").value;
+  let headers = document.getElementById("headers").value;
+  let body = document.getElementById("body").value;
+
+  if (!headers) {
+    headers = {};
+  }
+
+  if (!body) {
+    body = {};
+  }
+
+  new Notification("Stuff", { body: `${method}\n${url}\n${headers}\n${body}`})
+
+  let res;
+
+  if (method === "GET") {
+    res = await fetch(url, {
+      method: method,
+      headers: headers,
+    })
+  } else {
+    res = await fetch(url, {
+      method: method,
+      headers: headers,
+      body: body
+    })
+  }
+
+
+  new Notification("Request Sucessful!")
+
+  document.getElementById("response").innerHTML = `Reponse: <br /> <code>${await res.text()}</code>`
+}
